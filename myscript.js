@@ -1,40 +1,57 @@
 function getComputerChoice(){
     let computerChoice = Math.floor(Math.random() * 3);
     switch (computerChoice) {
-        case 0:
-            return choice = 'rock';
-            break;
-        case 1:
-            return choice = 'paper';
-            break;
-        case 2: 
-            return choice = 'scissors';
-            break;
+        //No need for break after return, as return already stops execution.
+        case 0: return 'rock';
+        case 1: return 'paper';
+        case 2: return 'scissor';
     }
 }
 
 function getHumanChoice() {
-    let humanChoice = prompt('Enter your choice! (rock/paper/scissors)','rock')
-    return humanChoice.toLowerCase();
+    //Use constant on value that never change
+    const correctChoice =['rock','paper','scissors'];
+    let humanChoice = prompt('Enter your choice! (rock/paper/scissors)','rock').toLowerCase();
+    
+    while(!correctChoice.includes(humanChoice)){
+        alert('That is not a valid choice! Only rock/paper/scissors');
+        humanChoice = prompt('Enter your choice! (rock/paper/scissors)','rock').toLowerCase();
+    }
+        return humanChoice;
 }
 
 let humanScore = 0;
 let computerScore = 0;
 
-alert(`A rock/paper/scissors game! \nThere's five round \nClick \'ok\' if u ready`);
+alert(`A rock/paper/scissors game! There's five round Click \'ok\' if u ready`);
 
 function playGame(){
 
+    //Game Logic Function
     function playRound(humanChoice, computerChoice){
-    
-        if ((humanChoice == 'rock' && computerChoice == 'paper') || (humanChoice == 'paper' && computerChoice == 'scissors') || (humanChoice == 'scissors' && computerChoice == 'rock')){
-            alert(`HAHA You loss! \nWear this mask bro🫴🤡 \n${computerChoice} beats ${humanChoice} don't u know that?`);
+        /* 
+        -Improve Readability
+        -Minor Formatting Improvements
+        -Use consistent indentation.
+        -Remove unnecessary \n in alert messages.
+        -Add spacing between logical blocks.
+        */
+        if ((humanChoice == 'rock' && computerChoice == 'paper') ||
+            (humanChoice == 'paper' && computerChoice == 'scissors') ||
+            (humanChoice == 'scissors' && computerChoice == 'rock')){
+            alert(`HAHA You loss! ${computerChoice} beats ${humanChoice}. Wear this mask bro🫴🤡`);
             computerScore++;
-        } else if ((humanChoice == 'rock' && computerChoice == 'rock') || (humanChoice == 'paper' && computerChoice == 'paper') || (humanChoice == 'scissors' && computerChoice == 'scissors')){
-            alert(`Wait its a tie!😱 \nHuman: ${humanChoice} | Computer: ${computerChoice}`);
-        } else if ((humanChoice == 'rock' && computerChoice == 'scissors') || (humanChoice == 'scissors' && computerChoice == 'paper') || (humanChoice == 'paper' && computerChoice == 'scissors')){
-            alert(`Oh wow! You Won! \nu cool ig👉👈🥹🤩 \nHuman: ${humanChoice} | Computer: ${computerChoice}`);
-            humanScore++;
+
+        } 
+        else if ((humanChoice == 'rock' && computerChoice == 'rock') ||
+                 (humanChoice == 'paper' && computerChoice == 'paper') || (humanChoice == 'scissors' && computerChoice == 'scissors')){
+                alert(`Wait its a tie!😱 \nHuman: ${humanChoice} | Computer: ${computerChoice}`);
+        } 
+        else if ((humanChoice == 'rock' && computerChoice == 'scissors') ||
+                 (humanChoice == 'scissors' && computerChoice == 'paper') ||
+                 (humanChoice == 'paper' && computerChoice == 'rock')){// Fixed here scissors to rock
+                alert(`Oh wow! You Won! 🤩 \nHuman: ${humanChoice} | Computer: ${computerChoice}`);
+                humanScore++;
         }
     }
 
@@ -45,13 +62,17 @@ function playGame(){
         playRound(humanSelection, computerSelection);
         alert(`Current Round: ${i}\nHuman: ${humanScore} | Computer: ${computerScore}`);
     }
+
+    // Game over message after all rounds
+    //Final Result
+    if(humanScore > computerScore){
+        alert('Damn g, u smarter then me, here a cookie 🫴🍪');
+    } else {
+        alert('G u literally loss to a Math.random function, wear ur mask clown🫵🤡');
+    } 
+
 }
 
 playGame();
 
-if(humanScore > computerScore){
-    alert('Damn g, u smarter then me, here a cookie 🫴🍪')
-} else (
-    alert('G u literally loss to a Math.random function🫵🤡 \nwear ur mask clown')
-)
 
