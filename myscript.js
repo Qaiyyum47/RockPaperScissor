@@ -32,7 +32,7 @@ function playGame(){
 
         //Simplify the condition by using object, [] brackets to access the key to the value, the value is what will lose to it
         const winCondtion = {
-            rock: 'string',
+            rock: 'scissors',
             paper: 'rock',
             scissors: 'paper'
         };
