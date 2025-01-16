@@ -29,29 +29,23 @@ function playGame(){
 
     //Game Logic Function
     function playRound(humanChoice, computerChoice){
-        /* 
-        -Improve Readability
-        -Minor Formatting Improvements
-        -Use consistent indentation.
-        -Remove unnecessary \n in alert messages.
-        -Add spacing between logical blocks.
-        */
-        if ((humanChoice == 'rock' && computerChoice == 'paper') ||
-            (humanChoice == 'paper' && computerChoice == 'scissors') ||
-            (humanChoice == 'scissors' && computerChoice == 'rock')){
+
+        //Simplify the condition by using object, [] brackets to access the key to the value, the value is what will lose to it
+        const winCondtion = {
+            rock: 'string',
+            paper: 'rock',
+            scissors: 'paper'
+        };
+
+        //If rock is the key, then the value is string
+        if (winCondtion[humanChoice] === computerChoice){
+            alert(`Oh wow! You Won! 🤩 \nHuman: ${humanChoice} | Computer: ${computerChoice}`);
+            humanScore++;
+        } else if (humanChoice === computerChoice){
+            alert(`Wait its a tie!😱 \nHuman: ${humanChoice} | Computer: ${computerChoice}`);
+        } else {
             alert(`HAHA You loss! ${computerChoice} beats ${humanChoice}. Wear this mask bro🫴🤡`);
             computerScore++;
-
-        } 
-        else if ((humanChoice == 'rock' && computerChoice == 'rock') ||
-                 (humanChoice == 'paper' && computerChoice == 'paper') || (humanChoice == 'scissors' && computerChoice == 'scissors')){
-                alert(`Wait its a tie!😱 \nHuman: ${humanChoice} | Computer: ${computerChoice}`);
-        } 
-        else if ((humanChoice == 'rock' && computerChoice == 'scissors') ||
-                 (humanChoice == 'scissors' && computerChoice == 'paper') ||
-                 (humanChoice == 'paper' && computerChoice == 'rock')){// Fixed here scissors to rock
-                alert(`Oh wow! You Won! 🤩 \nHuman: ${humanChoice} | Computer: ${computerChoice}`);
-                humanScore++;
         }
     }
 
@@ -74,5 +68,3 @@ function playGame(){
 }
 
 playGame();
-
-
