@@ -1,70 +1,74 @@
-function getComputerChoice(){
-    let computerChoice = Math.floor(Math.random() * 3);
-    switch (computerChoice) {
-        //No need for break after return, as return already stops execution.
-        case 0: return 'rock';
-        case 1: return 'paper';
-        case 2: return 'scissor';
-    }
-}
-
-function getHumanChoice() {
-    //Use constant on value that never change
-    const correctChoice =['rock','paper','scissors'];
-    let humanChoice = prompt('Enter your choice! (rock/paper/scissors)','rock').toLowerCase();
-    
-    while(!correctChoice.includes(humanChoice)){
-        alert('That is not a valid choice! Only rock/paper/scissors');
-        humanChoice = prompt('Enter your choice! (rock/paper/scissors)','rock').toLowerCase();
-    }
-        return humanChoice;
-}
-
 let humanScore = 0;
 let computerScore = 0;
+let display = document.querySelector(".display");
+let round = document.querySelector("#round");
+let desc = document.querySelector("#desc");
+let child = document.querySelector("#child");
 
-alert(`A rock/paper/scissors game! There's five round Click \'ok\' if u ready`);
-
-function playGame(){
-
-    //Game Logic Function
-    function playRound(humanChoice, computerChoice){
-
-        //Simplify the condition by using object, [] brackets to access the key to the value, the value is what will lose to it
-        const winCondtion = {
-            rock: 'scissors',
-            paper: 'rock',
-            scissors: 'paper'
-        };
-
-        //If rock is the key, then the value is string
-        if (winCondtion[humanChoice] === computerChoice){
-            alert(`Oh wow! You Won! 🤩 \nHuman: ${humanChoice} | Computer: ${computerChoice}`);
-            humanScore++;
-        } else if (humanChoice === computerChoice){
-            alert(`Wait its a tie!😱 \nHuman: ${humanChoice} | Computer: ${computerChoice}`);
-        } else {
-            alert(`HAHA You loss! ${computerChoice} beats ${humanChoice}. Wear this mask bro🫴🤡`);
-            computerScore++;
-        }
+function getComputerChoice() {
+    let computerChoice = Math.floor(Math.random() * 3);
+    switch (computerChoice) {
+        case 0: return 'rock';
+        case 1: return 'paper';
+        case 2: return 'scissors';
     }
-
-    for(let i = 1; i <= 5; i++){
-        const humanSelection = getHumanChoice();
-        const computerSelection = getComputerChoice();
-        
-        playRound(humanSelection, computerSelection);
-        alert(`Current Round: ${i}\nHuman: ${humanScore} | Computer: ${computerScore}`);
-    }
-
-    // Game over message after all rounds
-    //Final Result
-    if(humanScore > computerScore){
-        alert('Damn g, u smarter then me, here a cookie 🫴🍪');
-    } else {
-        alert('G u literally loss to a Math.random function, wear ur mask clown🫵🤡');
-    } 
-
 }
 
-playGame();
+let humanChoice = '';
+
+function getHumanChoice() {
+    let choice = document.querySelector(".option");
+    
+    choice.addEventListener("click", (event) => {
+        if (event.target.tagName === 'BUTTON') {
+            humanChoice = event.target.id;  // Store the human choice
+            playRound(humanChoice, getComputerChoice());
+        }
+    });
+}
+
+function playRound(humanChoice, computerChoice) {
+    const winCondition = {
+        rock: 'scissors',
+        paper: 'rock',
+        scissors: 'paper'
+    };
+
+    if (winCondition[humanChoice] === computerChoice) {
+        desc.textContent = `Oh wow! You Won! 🤩`;
+        child.textContent = `Human: ${humanChoice} | Computer: ${computerChoice}`;
+        humanScore++;
+    } else if (humanChoice === computerChoice) {
+        desc.textContent = `Wait, it's a tie!😱`;
+        child.textContent = `Human: ${humanChoice} | Computer: ${computerChoice}`;
+    } else {
+        desc.textContent = `HAHA You lost! ${computerChoice} beats ${humanChoice}. Wear your mask bro🫴🤡`;
+        computerScore++;
+    }
+
+    round.textContent = `Human: ${humanScore} | Computer: ${computerScore}`;
+    
+    if(humanScore >= 5){
+        endGame();
+    }
+}
+
+
+function endGame() {
+        if (humanScore == 5) {
+            round.textContent = 'Damn g, you’re smarter than me, here’s a cookie 🫴🍪';
+        } else {
+            round.textContent = 'You literally lost to a Math.random function, wear your mask clown 🫵🤡';
+        }
+        
+        let buttons = document.querySelectorAll(".option button");
+        buttons.forEach(button => {
+            button.disabled = true;
+        });
+}
+
+function playGame(){
+    getHumanChoice();
+}
+
+playGame();  // Start the game
